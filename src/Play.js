@@ -13,6 +13,15 @@ class Play{
         this.scene.add(this.axes);
         this.render();
     }
+
+    createTowers=()=>{
+        let tower;
+        for(let i=-1;i<2;i++){
+            tower=new Tower(0,0,i*40);
+            this.scene.add(tower);
+        }
+    }
+
     render=()=>{
         requestAnimationFrame(this.render);
         this.renderer.render(this.scene,this.camera);
