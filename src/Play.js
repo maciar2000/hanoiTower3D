@@ -14,12 +14,17 @@ class Play{
         this.render();
     }
 
+    randomColor=(color='0x')=>{
+        const chars='0123456789abcdef';
+        if(color.length<8) return this.randomColor(color+chars[Math.round(Math.random() * (chars.length - 1))]);
+        else return parseInt(color,16);
+    }
+
     createDiscs=n=>{
         let disc;
         const max=1+(n-1)*0.3;
         for(let i=0;i<n;i++){
-            let color=(i%2==0)?0x00ff00:0xff0000;
-            disc=new Disc(0,i,0,max-i*0.3,color);
+            disc=new Disc(0,i,0,max-i*0.3,this.randomColor());
             this.scene.add(disc);
         }
     }
