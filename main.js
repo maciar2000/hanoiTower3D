@@ -1,5 +1,6 @@
 $(document).ready(() => {
-    const root = $('#root');
-    const play=new Play();
+    let root = $('#root');
+    let play=new Play();
+    play.createDiscs(5);
     play.createTowers();
 });
