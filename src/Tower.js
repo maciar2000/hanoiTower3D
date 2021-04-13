@@ -10,22 +10,23 @@ class Tower extends THREE.Object3D{
         const loader=new THREE.FontLoader();
         tower.position.set(x,y,z);
         base.position.set(x,y-15,z);
-        loader.load("font/font.json",font=>{
-            this.text=new THREE.TextGeometry('test',{
-                font:font,
-                size:100,
-                height:5,
-                curveSegments:12
-            });
-        });
         tower.updateMatrix();
         geometry.merge(tower.geometry,tower.matrix);
         base.updateMatrix();
         geometry.merge(base.geometry,base.matrix);
-        //TODO name of towers
-        // this.text.updateMatrix();
-        // geometry.merge(this.text.geometry,this.text.matrix);
-        this.mesh=new THREE.Mesh(geometry,material);
-        this.add(this.mesh);
+        loader.load("font/font.json",font=>{
+            const textGeometry=new THREE.TextGeometry(`${number}`,{
+                font:font,
+                size:16,
+                height:1,
+                curveSegments:20
+            });
+            const text=new THREE.Mesh(textGeometry);
+            text.position.set(x-7.5,y-32,z);
+            text.updateMatrix();
+            geometry.merge(text.geometry,text.matrix);
+            this.mesh=new THREE.Mesh(geometry,material);
+            this.add(this.mesh);
+        });
     }
 }

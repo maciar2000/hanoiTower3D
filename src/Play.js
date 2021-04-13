@@ -7,18 +7,18 @@ class Play{
         this.renderer.setClearColor(0x000000);
         this.renderer.setSize(this.root.width(),this.root.height());
         this.root.append(this.renderer.domElement);
-        this.camera.position.set(100,0,0);
+        this.camera.position.set(0,0,200);
         this.camera.lookAt(0,0,0);
         this.axes=new THREE.AxesHelper(1000);
         this.scene.add(this.axes);
+        this.towers=[];
         this.render();
     }
 
     createTowers=()=>{
-        let tower;
         for(let i=-1;i<2;i++){
-            tower=new Tower(0,0,i*40);
-            this.scene.add(tower);
+            this.towers[i+1]=new Tower(i*40,0,0,i+1);
+            this.scene.add(this.towers[i+1]);
         }
     }
 
