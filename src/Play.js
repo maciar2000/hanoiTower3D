@@ -9,8 +9,6 @@ class Play{
         this.root.append(this.renderer.domElement);
         this.camera.position.set(0,0,200);
         this.camera.lookAt(0,0,0);
-        this.axes=new THREE.AxesHelper(1000);
-        this.scene.add(this.axes);
         this.discs=[];
         this.towers=[];
         this.render();
@@ -25,7 +23,7 @@ class Play{
     createDiscs=n=>{
         const max=1+(n-1)*0.3;
         for(let i=0;i<n;i++){
-            this.discs[i]=new Disc(0,i,0,max-i*0.3,this.randomColor());
+            this.discs[i]=new Disc(-40,i-14,0,max-i*0.3,this.randomColor());
             this.scene.add(this.discs[i]);
         }
     }

@@ -3,7 +3,7 @@ class Tower extends THREE.Object3D{
         super();
         const material = new THREE.MeshBasicMaterial({color:0xaaaaaa});
         const cylinderGeometry = new THREE.CylinderGeometry(1,1,30,10);
-        const baseGeometry=new THREE.CylinderGeometry(10,10,1,10);
+        const baseGeometry=new THREE.CylinderGeometry(5,5,1,10);
         const tower=new THREE.Mesh(cylinderGeometry);
         const base=new THREE.Mesh(baseGeometry);
         const geometry=new THREE.Geometry();
