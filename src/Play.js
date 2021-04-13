@@ -7,11 +7,12 @@ class Play{
         this.renderer.setClearColor(0x000000);
         this.renderer.setSize(this.root.width(),this.root.height());
         this.root.append(this.renderer.domElement);
-        this.camera.position.set(0,0,100);
+        this.camera.position.set(0,0,200);
         this.camera.lookAt(0,0,0);
         this.axes=new THREE.AxesHelper(1000);
         this.scene.add(this.axes);
         this.discs=[];
+        this.towers=[];
         this.render();
     }
 
@@ -26,6 +27,13 @@ class Play{
         for(let i=0;i<n;i++){
             this.discs[i]=new Disc(0,i,0,max-i*0.3,this.randomColor());
             this.scene.add(this.discs[i]);
+        }
+    }
+
+    createTowers=()=>{
+        for(let i=-1;i<2;i++){
+            this.towers[i+1]=new Tower(i*40,0,0,i+1);
+            this.scene.add(this.towers[i+1]);
         }
     }
 
