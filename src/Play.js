@@ -25,8 +25,8 @@ class Play{
     createDiscs=()=>{
         const max=1+(this.n-1)*0.3;
         for(let i=0;i<this.n;i++){
-            this.discs[i]=new Disc(-1*this.n*4,i-((this.n+5)/2)+1,0,max-i*0.3,this.randomColor());
-            this.scene.add(this.discs[i]);
+            this.discs[this.n-i-1]=new Disc(-1*this.n*4,i-((this.n+5)/2)+1,0,max-i*0.3,this.randomColor());
+            this.scene.add(this.discs[this.n-i-1]);
         }
     }
 
@@ -34,6 +34,15 @@ class Play{
         for(let i=-1;i<2;i++){
             this.towers[i+1]=new Tower(i*this.n*4,0,0,this.n,i+1);
             this.scene.add(this.towers[i+1]);
+        }
+    }
+
+    moveTower=(n,from,to,other)=>{
+        if(n>=0){
+            this.moveTower(n-1,from,other,to);
+            console.log(`d: ${n} from ${from} to ${to}`);
+            // this.discs[n].position.x=(to-1)*this.n*4
+            this.moveTower(n-1,other,to,from);
         }
     }
 
