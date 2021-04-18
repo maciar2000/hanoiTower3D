@@ -8,6 +8,7 @@ $(document).ready(() => {
         play.createTowers();
         play.createDiscs();
         $('#start').hide(1000)
-        setTimeout(()=>play.moveTower(n-1,0,2,1),2000);
+        setTimeout(()=>play.hanoiAlgorithm(n - 1, 0, 2, 1),2000);
+        setTimeout(()=>play.moveDiscs(),5000);
     });
 });

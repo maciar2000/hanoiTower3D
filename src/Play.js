@@ -13,11 +13,18 @@ class Play {
         this.towers = [];
         this.n = 5;
         this.start = false;
-        this.position = {
-            x:this.n*4,
-            y: -((this.n + 5) / 2) + 1
-        };
-        this.move = 0;
+        this.move={
+            direction:'',
+            position:{
+                x:this.n*4,
+                y:-((this.n + 5) / 2) + 1
+            },
+            disc:0,
+next:'',
+            t1:0,
+            t2:0
+        }
+        this.moveDescription=[];
         this.render();
     }
 
@@ -33,7 +40,6 @@ class Play {
             this.discs[this.n - i - 1] = new Disc(-1 * this.n * 4, i - ((this.n + 5) / 2) + 1, 0, max - i * 0.3, this.randomColor());
             this.scene.add(this.discs[this.n - i - 1]);
         }
-        console.log(this.discs[this.n - 1].position)
     }
 
     createTowers = () => {
@@ -43,15 +49,24 @@ class Play {
         }
     }
 
-    moveTower = (n, from, to, other) => {
+    hanoiAlgorithm = (n, from, to, other) => {
         if (n >= 0) {
-            this.moveTower(n - 1, from, other, to);
-            console.log(`d: ${n} from ${from} to ${to}`);
-            // this.discs[n].position.x=(to-1)*this.n*4
-            this.moveTower(n - 1, other, to, from);
+            this.hanoiAlgorithm(n - 1, from, other, to);
+            this.moveDescription.push(`${n},${to},${from}`);
+            this.hanoiAlgorithm(n - 1, other, to, from);
         }
-        this.move = 'UP';
-        // this.discs[0].position.y=this.n*2;
+    }
+
+    moveDiscs=(i=0)=>{
+        if(i<this.moveDescription.length) {
+            const current = this.moveDescription[i].split(',');
+            this.move.direction = 'UP';
+            this.move.disc = current[0];
+            this.move.position.x = (current[1] - 1) * this.n * 4;
+            this.move.position.y = current[0] - ((this.n + 5) / 2) + 1;
+            this.move.next = i + 1;
+            // todo tower position t1, t2 variables
+        }
     }
 
     render = () => {
@@ -60,17 +75,24 @@ class Play {
             else this.start = false;
             this.camera.lookAt(0, 0, 0);
         }
-        if (this.move === 'UP') {
-            if (this.discs[0].position.y < this.n * 2) this.discs[0].position.y += 0.1;
-            else this.move = 'RIGHT';
+        if (this.move.direction === 'UP') {
+            if (this.discs[this.move.disc].position.y < this.n*2) this.discs[this.move.disc].position.y += 1;
+            else this.move.direction = (this.discs[this.move.disc].position.x>this.move.position.x?'LEFT':'RIGHT');
         }
-        if (this.move === 'RIGHT') {
-            if (this.discs[0].position.x < this.position.x) this.discs[0].position.x += 0.1;
-            else this.move = 'DOWN';
+        if (this.move.direction === 'DOWN') {
+            if (this.discs[this.move.disc].position.y > this.move.position.y) this.discs[this.move.disc].position.y -= 1;
+            else {
+                this.move.direction = '';
+                this.moveDiscs(this.move.next);
+            }
         }
-        if (this.move === 'DOWN') {
-            if (this.discs[0].position.y > this.position.y) this.discs[0].position.y -= 0.1;
-            else this.move = 0;
+        if (this.move.direction === 'RIGHT') {
+            if (this.discs[this.move.disc].position.x < this.move.position.x) this.discs[this.move.disc].position.x += 1;
+            else this.move.direction = 'DOWN';
+        }
+        if (this.move.direction === 'LEFT') {
+            if (this.discs[this.move.disc].position.x > this.move.position.x) this.discs[this.move.disc].position.x -= 1;
+            else this.move.direction = 'DOWN';
         }
         requestAnimationFrame(this.render);
         this.renderer.render(this.scene, this.camera);
