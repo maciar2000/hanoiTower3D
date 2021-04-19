@@ -20,7 +20,6 @@ class Play {
                 y:-((this.n + 5) / 2) + 1
             },
             disc:0,
-next:'',
             towerPosition:[0,0,0]
         }
         this.moveDescription=[];
@@ -57,16 +56,16 @@ next:'',
         }
     }
 
-    moveDiscs=(i=0)=>{
-        if(i<this.moveDescription.length) {
-            const current = this.moveDescription[i].split(',');
+    moveDiscs=()=>{
+        if(this.moveDescription.length>0) {
+            const [disc,to,from] = this.moveDescription[0].split(',');
             this.move.direction = 'UP';
-            this.move.disc = current[0];
-            this.move.position.x = (current[1] - 1) * this.n * 4;
-            this.move.position.y = this.move.towerPosition[current[1]] - ((this.n + 5) / 2) + 1;
-            this.move.towerPosition[current[1]]++;
-            this.move.towerPosition[current[2]]--;
-            this.move.next = i + 1;
+            this.move.disc = disc;
+            this.move.position.x = (to - 1) * this.n * 4;
+            this.move.position.y = this.move.towerPosition[to] - ((this.n + 5) / 2) + 1;
+            this.move.towerPosition[to]++;
+            this.move.towerPosition[from]--;
+            this.moveDescription.shift();
         }
     }
 
@@ -84,7 +83,7 @@ next:'',
             if (this.discs[this.move.disc].position.y > this.move.position.y) this.discs[this.move.disc].position.y -= 1;
             else {
                 this.move.direction = '';
-                this.moveDiscs(this.move.next);
+                this.moveDiscs();
             }
         }
         if (this.move.direction === 'RIGHT') {
