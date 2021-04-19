@@ -2,13 +2,13 @@ $(document).ready(() => {
     let play=new Play();
     $('#btnStart').on('click',()=>{
         const n=parseInt($('#number').val());
+        const to=parseInt($('#tower').val());
         if(n<2) return;
+        if(to>2 || to<1) return;
         play.n=n
-        play.start=true;
+        play.to=to;
         play.createTowers();
-        play.createDiscs();
         $('#start').hide(1000)
-        setTimeout(()=>play.hanoiAlgorithm(n - 1, 0, 2, 1),2000);
         setTimeout(()=>play.moveDiscs(),5000);
     });
 });

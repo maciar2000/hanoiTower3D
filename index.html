@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -50,7 +49,7 @@
       text-align: center;
       margin-top: 40vh;
     }
-    #start input{
+    #start input, #start select{
       width: 50%;
       height: 50px;
       background: green;
@@ -68,8 +67,13 @@
 <body>
 <div id="start">
   <div>
-    <p>Podaj ilość krążków:</p>
-    <input type="number" name="number" value="5" id="number">
+    <p>Podaj ilość krążków (min=2):</p>
+    <input type="number" name="number" value="5" id="number" min="2">
+    <p>Wybierz na którą wieżę chcesz przenieść krążki:</p>
+    <select name="tower" id="tower">
+      <option value="1">1</option>
+      <option value="2">2</option>
+    </select><br>
     <button id="btnStart">start</button>
   </div>
 </div>

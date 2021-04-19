@@ -23,6 +23,7 @@ class Play {
             towerPosition:[0,0,0]
         }
         this.moveDescription=[];
+        this.to=1;
         this.render();
     }
 
@@ -39,6 +40,7 @@ class Play {
             this.scene.add(this.discs[this.n - i - 1]);
         }
         this.move.towerPosition[0]=this.n;
+        this.hanoiAlgorithm(this.n-1,0,this.to,this.to===2?1:2);
     }
 
     createTowers = () => {
@@ -46,6 +48,8 @@ class Play {
             this.towers[i + 1] = new Tower(i * this.n * 4, 0, 0, this.n, i + 1);
             this.scene.add(this.towers[i + 1]);
         }
+        this.createDiscs();
+        this.start=true;
     }
 
     hanoiAlgorithm = (n, from, to, other) => {
