@@ -21,8 +21,7 @@ class Play {
             },
             disc:0,
 next:'',
-            t1:0,
-            t2:0
+            towerPosition:[0,0,0]
         }
         this.moveDescription=[];
         this.render();
@@ -40,6 +39,7 @@ next:'',
             this.discs[this.n - i - 1] = new Disc(-1 * this.n * 4, i - ((this.n + 5) / 2) + 1, 0, max - i * 0.3, this.randomColor());
             this.scene.add(this.discs[this.n - i - 1]);
         }
+        this.move.towerPosition[0]=this.n;
     }
 
     createTowers = () => {
@@ -63,9 +63,10 @@ next:'',
             this.move.direction = 'UP';
             this.move.disc = current[0];
             this.move.position.x = (current[1] - 1) * this.n * 4;
-            this.move.position.y = current[0] - ((this.n + 5) / 2) + 1;
+            this.move.position.y = this.move.towerPosition[current[1]] - ((this.n + 5) / 2) + 1;
+            this.move.towerPosition[current[1]]++;
+            this.move.towerPosition[current[2]]--;
             this.move.next = i + 1;
-            // todo tower position t1, t2 variables
         }
     }
 
